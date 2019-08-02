@@ -25,13 +25,13 @@ module "valve" {
 
 # output
 output "vpc_id" {
-  value = module.okc0.vpc_id
+  value = module.valve.vpc_id
 }
 
 output "vpc_cidr" {
-  value = module.okc0.vpc_cidr
+  value = module.valve.vpc_cidr
 }
   
 output "config" {
-  value = module.okc0.efs_id
+  value = module.valve.efs_id
 }

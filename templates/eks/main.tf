@@ -26,5 +26,5 @@ module "valve" {
 # output
   
 output "config" {
-  value = module.okc0.config
+  value = module.valve.config
 }

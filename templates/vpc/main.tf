@@ -26,13 +26,13 @@ module "valve" {
 # output
   
 output "vpc_id" {
-  value = module.okc0.vpc_id
+  value = module.valve.vpc_id
 }
 
 output "vpc_cidr" {
-  value = module.okc0.vpc_cidr
+  value = module.valve.vpc_cidr
 }
 
 output "subnet_id" {
-  value = module.okc0.subnet_id
+  value = module.valve.subnet_id
 }
