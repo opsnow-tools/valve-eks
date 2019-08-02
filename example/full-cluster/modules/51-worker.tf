@@ -10,13 +10,13 @@
 */
 
 locals {
-  eks_ami_id = ""
-  instance_type = "m4.xlarge"
+  eks_ami_id = "ami-07fd7609df6c8e39b"
+  instance_type = ""
   min = 2
-  max = 5
-  instance_type_mixed = ["m4.xlarge", "r5.xlarge", "r4.xlarge"]
-  on_demand_base = 2
-  on_demand_rate = 25
+  max = 3
+  instance_type_mixed = []
+  on_demand_base = 0
+  on_demand_rate = 0
 }
 
 # worker iam role
@@ -314,8 +314,8 @@ resource "aws_autoscaling_group" "worker-mixed" {
 
   mixed_instances_policy {
     instances_distribution {
-      on_demand_base_capacity                  = local.on_demand_base
-      on_demand_percentage_above_base_capacity = local.on_demand_rate
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 0
     }
 
     launch_template {
