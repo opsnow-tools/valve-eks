@@ -24,14 +24,7 @@ module "valve" {
 }
 
 # output
-output "vpc_id" {
-  value = module.valve.vpc_id
-}
 
-output "vpc_cidr" {
-  value = module.valve.vpc_cidr
-}
-  
-output "config" {
+output "efs_id" {
   value = module.valve.efs_id
 }
