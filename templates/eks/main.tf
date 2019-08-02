@@ -12,8 +12,8 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
-module "okc0" {
-  source = "./modules/okc0"
+module "valve" {
+  source = "./modules"
 
   # common value
   region = "ap-northeast-2"
