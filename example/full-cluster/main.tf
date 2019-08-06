@@ -14,6 +14,12 @@ provider "aws" {
 
 module "valve" {
   source = "./modules"
+
+  # common value
+  region = "ap-northeast-2"
+  city = "SEOUL"
+  stage = "DEV"
+  name = "TEST"
 }
 
 # output
