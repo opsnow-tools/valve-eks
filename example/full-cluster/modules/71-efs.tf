@@ -1,4 +1,4 @@
-# 71-cluster.tf local variable
+# 71-efs.tf local variable
 /*
   vpc_id : vpc id made by 'vpc' terraform script
   private_a_subnet : private az A subnet id
@@ -7,6 +7,7 @@
 */
 
 locals {
+#  vpc_id = ""
   private_a_subnet = aws_subnet.private_A.id
   private_c_subnet = aws_subnet.private_C.id
   worker_sg_id = aws_security_group.worker.id

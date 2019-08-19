@@ -1,6 +1,3 @@
-data "aws_availability_zones" "azs" {
-} 
-
 /*
   update cidr_block
 */
