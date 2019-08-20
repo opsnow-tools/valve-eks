@@ -1,6 +1,6 @@
 # 51-worker.tf local variable
 /*
-  eks_ami_id : EKS AMI id. Must find in AWS Console. example is 'amazon-eks-node-1.13-v20190701'
+  eks_ami_id : EKS AMI id. Must find in AWS Console. example is 'ami-07fd7609df6c8e39b : amazon-eks-node-1.13-v20190701'
   instance_type : EC2 instance type
   min : EC2 instance min value
   max : EC2 instance max value

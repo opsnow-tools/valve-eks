@@ -22,8 +22,7 @@ module "valve" {
   name = ""
 }
 
-# output
-  
+# output common
 output "vpc_id" {
   value = module.valve.vpc_id
 }
@@ -35,3 +34,15 @@ output "vpc_cidr" {
 output "subnet_id" {
   value = module.valve.subnet_id
 }
+
+/*
+# output efs
+output "efs_id" {
+  value = module.valve.efs_id
+}
+
+# output eks
+output "config" {
+  value = module.valve.config
+}
+*/

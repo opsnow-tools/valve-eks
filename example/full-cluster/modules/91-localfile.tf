@@ -9,9 +9,7 @@
 data "aws_caller_identity" "current" {
 }
 
-
-locals {
-  map_roles = [
+/* map roles example
     {
       rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.upper_name}-BASTION"
       username = "iam-bastion"
@@ -22,6 +20,9 @@ locals {
       username = "iam-coruscant"
       group    = "system:masters"
     },
+*/
+locals {
+  map_roles = [
   ]
 }
 

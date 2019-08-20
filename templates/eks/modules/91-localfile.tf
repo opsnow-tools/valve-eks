@@ -1,11 +1,15 @@
+/*
+  local.map_roles : Kubernetes roles in EKS. Worker node has to have one or more roles to access other resources like 'BASTION', other clusters in AWS.
+                    Write role arn of each rolearn variable.
+  var.map_user : Kubernetes user in EKS. User must have iam account in AWS.
+*/
+
 # local file
 
 data "aws_caller_identity" "current" {
 }
 
-
-locals {
-  map_roles = [
+/* map roles example
     {
       rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.upper_name}-BASTION"
       username = "iam-bastion"
@@ -16,6 +20,9 @@ locals {
       username = "iam-coruscant"
       group    = "system:masters"
     },
+*/
+locals {
+  map_roles = [
   ]
 }
 
