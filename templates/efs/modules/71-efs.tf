@@ -31,18 +31,20 @@ resource "aws_security_group" "efs" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    description     = "Allow worker to communicate with each other"
-    security_groups = [local.worker_sg_id]
-    from_port       = 2049
-    to_port         = 2049
-    protocol        = "-1"
-  }
-
   tags = {
     "Name"                                        = "efs.${local.cluster_name}"
     "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
+}
+
+resource "aws_security_group_rule" "efs-ingress-worker" {
+  description              = "Allow worker to communicate with each other"
+  security_group_id        = aws_security_group.efs.id
+  source_security_group_id = "sg-0079096b5159878f4"
+  from_port                = 2049
+  to_port                  = 2049
+  protocol                 = "-1"
+  type                     = "ingress"
 }
 
 ## efs
