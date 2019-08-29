@@ -65,6 +65,8 @@ resource "aws_autoscaling_group" "worker-spot" {
     version = "$Latest"
   }
 
+  target_group_arns = [aws_lb_target_group.tg_http.arn]
+
   tags = concat(
     [
       {
