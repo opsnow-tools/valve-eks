@@ -42,7 +42,7 @@ output "efs_id" {
 }
 
 # output eks
-output "config" {
-  value = module.valve.config
+output "eks_config_output" {
+  value = module.valve.eks_config_output
 }
 */
