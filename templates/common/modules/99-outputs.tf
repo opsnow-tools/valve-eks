@@ -1,4 +1,7 @@
+# 99-output.tf
+
 ## output common
+
 output "vpc_id" {
   value = aws_vpc.this.id
 }

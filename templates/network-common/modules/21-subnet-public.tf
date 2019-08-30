@@ -1,4 +1,6 @@
 # 21-subnet-public.tf
+
+## local variable
 /*
   public_a_cidr : az A / public subnet cidr
   public_a_az : name of az A
@@ -8,15 +10,15 @@
 
 locals {
   public_a_cidr = "10.253.1.0/24"
-  public_a_az = "ap-northeast-2a"
+  public_a_az   = "ap-northeast-2a"
   public_c_cidr = "10.253.2.0/24"
-  public_c_az = "ap-northeast-2c"
+  public_c_az   = "ap-northeast-2c"
 }
 
-# cluster subnet public
+## cluster subnet public
 resource "aws_subnet" "public_A" {
-  vpc_id = aws_vpc.this.id
-  cidr_block = local.public_a_cidr
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = local.public_a_cidr
   availability_zone = local.public_a_az
   tags = merge(
     {
@@ -27,8 +29,8 @@ resource "aws_subnet" "public_A" {
 }
 
 resource "aws_subnet" "public_C" {
-  vpc_id = aws_vpc.this.id
-  cidr_block = local.public_c_cidr
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = local.public_c_cidr
   availability_zone = local.public_c_az
   tags = merge(
     {

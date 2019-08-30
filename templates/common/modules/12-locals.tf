@@ -1,7 +1,9 @@
-# locals
+# 12-locals.tf
+
+## locals
 data "aws_availability_zones" "azs" {
 }
-  
+
 locals {
   name = "${var.stage}-${var.name}"
 
