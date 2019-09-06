@@ -1,3 +1,9 @@
+locals {
+  asg_name = ""
+  es_clientid = ""
+  es_name = ""
+}
+
 resource "aws_cloudwatch_metric_alarm" "asg_cpu_utilization" {
   alarm_name = "${local.upper_cluster_name}-ASG-CPUUtilization"
   comparison_operator = "GreaterThanOrEqualToThreshold"
@@ -9,7 +15,7 @@ resource "aws_cloudwatch_metric_alarm" "asg_cpu_utilization" {
   threshold = "80"
 
   dimensions = {
-    AutoScalingGroupName = "${local.full_name}"
+    AutoScalingGroupName = "${local.asg_name}"
   }
 
   alarm_description = "This metric monitors cpu utilization of worker nodes."
@@ -17,7 +23,7 @@ resource "aws_cloudwatch_metric_alarm" "asg_cpu_utilization" {
 }
 
 data "aws_autoscaling_group" "worker" {
-  name = "${local.full_name}"
+  name = "${local.asg_name}"
 }
 
 resource "aws_cloudwatch_metric_alarm" "asg_group_desired_capacity" {
@@ -25,13 +31,13 @@ resource "aws_cloudwatch_metric_alarm" "asg_group_desired_capacity" {
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods = "2"
   metric_name = "GroupDesiredCapacity"
-  namespace = "AWS/ASG"
+  namespace = "AWS/AutoScaling"
   period = "120"
   statistic = "Maximum"
   threshold = "${data.aws_autoscaling_group.worker.max_size}"
 
   dimensions = {
-    AutoScalingGroupName = "${local.full_name}"
+    AutoScalingGroupName = "${local.asg_name}"
   }
 
   alarm_description = "This metric monitors group desired capacity of the autoscaling group."
@@ -39,7 +45,7 @@ resource "aws_cloudwatch_metric_alarm" "asg_group_desired_capacity" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "es_cluster_status_red" {
-  alarm_name = "${local.full_name}-ES-ClusterStatus-Red"
+  alarm_name = "${local.full_name}-ES-ClusterStatusRed"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods = "1"
   metric_name = "ClusterStatus.red"
@@ -49,7 +55,8 @@ resource "aws_cloudwatch_metric_alarm" "es_cluster_status_red" {
   threshold = "1"
 
   dimensions = {
-    DomainName = "${local.elasticsearch_name}"
+    DomainName = "${local.es_name}"
+    ClientId = "${local.es_clientid}"
   }
 
   alarm_description = "This metric monitors clusterstatus.red of the elasticsearch."
@@ -57,7 +64,7 @@ resource "aws_cloudwatch_metric_alarm" "es_cluster_status_red" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "es_cluster_status_yellow" {
-  alarm_name = "${local.full_name}-ES-ClusterStatus-Yellow"
+  alarm_name = "${local.full_name}-ES-ClusterStatusYellow"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods = "1"
   metric_name = "ClusterStatus.yellow"
@@ -67,7 +74,8 @@ resource "aws_cloudwatch_metric_alarm" "es_cluster_status_yellow" {
   threshold = "1"
 
   dimensions = {
-    DomainName = "${local.elasticsearch_name}"
+    DomainName = "${local.es_name}"
+    ClientId = "${local.es_clientid}"
   }
 
   alarm_description = "This metric monitors clusterstatus.yellow of the elasticsearch."
@@ -75,7 +83,7 @@ resource "aws_cloudwatch_metric_alarm" "es_cluster_status_yellow" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "es_cluster_free_storage_space" {
-  alarm_name = "${local.full_name}-ES-Free-Storage-Space"
+  alarm_name = "${local.full_name}-ES-FreeStorageSpace"
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods = "1"
   metric_name = "FreeStorageSpace"
@@ -85,7 +93,8 @@ resource "aws_cloudwatch_metric_alarm" "es_cluster_free_storage_space" {
   threshold = "10240"
 
   dimensions = {
-    DomainName = "${local.elasticsearch_name}"
+    DomainName = "${local.es_name}"
+    ClientId = "${local.es_clientid}"
   }
 
   alarm_description = "This metric monitors free storage space of the elasticsearch."
@@ -93,7 +102,7 @@ resource "aws_cloudwatch_metric_alarm" "es_cluster_free_storage_space" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "es_cluster_automated_snapshot_failure" {
-  alarm_name = "${local.full_name}-ES-Automated-Snapshot-Failure"
+  alarm_name = "${local.full_name}-ES-AutomatedSnapshotFailure"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods = "1"
   metric_name = "AutomatedSnapshotFailure"
@@ -103,7 +112,8 @@ resource "aws_cloudwatch_metric_alarm" "es_cluster_automated_snapshot_failure" {
   threshold = "1"
 
   dimensions = {
-    DomainName = "${local.elasticsearch_name}"
+    DomainName = "${local.es_name}"
+    ClientId = "${local.es_clientid}"
   }
 
   alarm_description = "This metric monitors automated snapshot failure of the elasticsearch."
