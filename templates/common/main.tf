@@ -20,6 +20,9 @@ module "valve" {
   city = ""
   stage = ""
   name = ""
+
+  enable_eks_config_custom_path = false
+  eks_config_path = ""
 }
 
 # output common

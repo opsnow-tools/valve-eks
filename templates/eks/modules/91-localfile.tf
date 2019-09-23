@@ -26,6 +26,16 @@ locals {
   ]
 }
 
+variable "enable_eks_config_custom_path" {
+  type = bool
+  default = false
+}
+
+variable "eks_config_path" {
+  type = string
+  default = ""
+}
+
 variable "map_users" {
   default = [
     {
@@ -88,19 +98,48 @@ data "template_file" "aws_auth" {
   }
 }
 
-resource "local_file" "aws_auth" {
+## local file in current path
+resource "local_file" "aws_auth_cwd" {
+  count = var.enable_eks_config_custom_path ? 0 : 1
+
   content  = data.template_file.aws_auth.rendered
-  filename = "/terraformtmp/.output/aws_auth.yaml"
+  filename = "${path.cwd}/.output/aws_auth.yaml"
 }
 
-resource "local_file" "kube_config" {
+resource "local_file" "kube_config_cwd" {
+  count = var.enable_eks_config_custom_path ? 0 : 1
+
   content  = data.template_file.kube_config.rendered
-  filename = "/terraformtmp/.output/kube_config.yaml"
+  filename = "${path.cwd}/.output/kube_config.yaml"
 }
 
-resource "local_file" "kube_config_secret" {
+resource "local_file" "kube_config_secret_cwd" {
+  count = var.enable_eks_config_custom_path ? 0 : 1
+
   content  = data.template_file.kube_config_secret.rendered
-  filename = "/terraformtmp/.output/kube_config_secret.yaml"
+  filename = "${path.cwd}/.output/kube_config_secret.yaml"
+}
+
+## local file in custom path
+resource "local_file" "aws_auth_custom" {
+  count = var.enable_eks_config_custom_path ? 1 : 0
+
+  content  = data.template_file.aws_auth.rendered
+  filename = "${var.eks_config_path}/.output/aws_auth.yaml"
+}
+
+resource "local_file" "kube_config_custom" {
+  count = var.enable_eks_config_custom_path ? 1 : 0
+
+  content  = data.template_file.kube_config.rendered
+  filename = "${var.eks_config_path}/.output/kube_config.yaml"
+}
+
+resource "local_file" "kube_config_secret_custom" {
+  count = var.enable_eks_config_custom_path ? 1 : 0
+
+  content  = data.template_file.kube_config_secret.rendered
+  filename = "${var.eks_config_path}/.output/kube_config_secret.yaml"
 }
 
 resource "null_resource" "executor" {
