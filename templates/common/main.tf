@@ -21,6 +21,7 @@ module "valve" {
   stage = ""
   name = ""
 
+  # setting eks config file path
   enable_eks_config_custom_path = false
   eks_config_path = ""
 }
