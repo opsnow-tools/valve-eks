@@ -98,48 +98,20 @@ data "template_file" "aws_auth" {
   }
 }
 
-## local file in current path
-resource "local_file" "aws_auth_cwd" {
-  count = var.enable_eks_config_custom_path ? 0 : 1
-
+## check local file in current path or custom path
+resource "local_file" "aws_auth" {
   content  = data.template_file.aws_auth.rendered
-  filename = "${path.cwd}/.output/aws_auth.yaml"
+  filename = var.enable_eks_config_custom_path ? "${var.eks_config_path}/.output/aws_auth.yaml" : "${path.cwd}/.output/aws_auth.yaml"
 }
 
-resource "local_file" "kube_config_cwd" {
-  count = var.enable_eks_config_custom_path ? 0 : 1
-
+resource "local_file" "kube_config" {
   content  = data.template_file.kube_config.rendered
-  filename = "${path.cwd}/.output/kube_config.yaml"
+  filename = var.enable_eks_config_custom_path ? "${var.eks_config_path}/.output/kube_config.yaml" : "${path.cwd}/.output/kube_config.yaml"
 }
 
-resource "local_file" "kube_config_secret_cwd" {
-  count = var.enable_eks_config_custom_path ? 0 : 1
-
+resource "local_file" "kube_config_secret" {
   content  = data.template_file.kube_config_secret.rendered
-  filename = "${path.cwd}/.output/kube_config_secret.yaml"
-}
-
-## local file in custom path
-resource "local_file" "aws_auth_custom" {
-  count = var.enable_eks_config_custom_path ? 1 : 0
-
-  content  = data.template_file.aws_auth.rendered
-  filename = "${var.eks_config_path}/.output/aws_auth.yaml"
-}
-
-resource "local_file" "kube_config_custom" {
-  count = var.enable_eks_config_custom_path ? 1 : 0
-
-  content  = data.template_file.kube_config.rendered
-  filename = "${var.eks_config_path}/.output/kube_config.yaml"
-}
-
-resource "local_file" "kube_config_secret_custom" {
-  count = var.enable_eks_config_custom_path ? 1 : 0
-
-  content  = data.template_file.kube_config_secret.rendered
-  filename = "${var.eks_config_path}/.output/kube_config_secret.yaml"
+  filename = var.enable_eks_config_custom_path ? "${var.eks_config_path}/.output/kube_config_secret.yaml" : "${path.cwd}/.output/kube_config_secret.yaml"
 }
 
 resource "null_resource" "executor" {
