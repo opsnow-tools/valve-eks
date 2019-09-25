@@ -26,6 +26,16 @@ locals {
   ]
 }
 
+variable "enable_eks_config_custom_path" {
+  type = bool
+  default = false
+}
+
+variable "eks_config_path" {
+  type = string
+  default = ""
+}
+
 variable "map_users" {
   default = [
     {
@@ -88,19 +98,20 @@ data "template_file" "aws_auth" {
   }
 }
 
+## check local file in current path or custom path
 resource "local_file" "aws_auth" {
   content  = data.template_file.aws_auth.rendered
-  filename = "${path.cwd}/.output/aws_auth.yaml"
+  filename = var.enable_eks_config_custom_path ? "${var.eks_config_path}/.output/aws_auth.yaml" : "${path.cwd}/.output/aws_auth.yaml"
 }
 
 resource "local_file" "kube_config" {
   content  = data.template_file.kube_config.rendered
-  filename = "${path.cwd}/.output/kube_config.yaml"
+  filename = var.enable_eks_config_custom_path ? "${var.eks_config_path}/.output/kube_config.yaml" : "${path.cwd}/.output/kube_config.yaml"
 }
 
 resource "local_file" "kube_config_secret" {
   content  = data.template_file.kube_config_secret.rendered
-  filename = "${path.cwd}/.output/kube_config_secret.yaml"
+  filename = var.enable_eks_config_custom_path ? "${var.eks_config_path}/.output/kube_config_secret.yaml" : "${path.cwd}/.output/kube_config_secret.yaml"
 }
 
 resource "null_resource" "executor" {
