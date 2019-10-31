@@ -14,6 +14,10 @@ $RECYCLE.BIN/
 # Mac
 .DS_Store
 
+# Maven
+target/
+build/
+
 # JetBrains
 .idea/
 *.iml
@@ -32,9 +36,15 @@ build/
 *.log
 *.tmp
 
-# hide
+# Hide
 versions
 
-# terraform
+# Terraform
 .terraform
+.terraform.tfstate.lock.info
+terraform.tfstate.backup
+terraform.tfstate
+terraform.tfplan
 
+# Temp
+.output/

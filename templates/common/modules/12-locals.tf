@@ -1,7 +1,9 @@
-# locals
+# 12-locals.tf
+
+## locals
 data "aws_availability_zones" "azs" {
 }
-  
+
 locals {
   name = "${var.stage}-${var.name}"
 
@@ -70,8 +72,8 @@ EOF
 }
 
 locals {
-  config = <<EOF
-#
+  eks_config_output = <<EOF
+
 # kube config
 aws eks update-kubeconfig --name ${local.cluster_name} --alias ${local.cluster_name}
 # or

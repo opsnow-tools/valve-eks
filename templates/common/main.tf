@@ -20,6 +20,10 @@ module "valve" {
   city = ""
   stage = ""
   name = ""
+
+  # setting eks config file path
+  enable_eks_config_custom_path = false
+  eks_config_path = ""
 }
 
 # output common
@@ -42,7 +46,7 @@ output "efs_id" {
 }
 
 # output eks
-output "config" {
-  value = module.valve.config
+output "eks_config_output" {
+  value = module.valve.eks_config_output
 }
 */

@@ -1,22 +1,25 @@
-# 71-efs.tf local variable
+# 71-efs.tf 
+
+## local variable
 /*
   vpc_id : vpc id made by 'vpc' terraform script
+           [Priority] aws_vpc.this.id > local.vpc_id > "vpc-0xxxxxxxx"
   private_a_subnet : private az A subnet id
   private_c_subnet : private az C subnet id
   worker_sg_id : EKS worker node Security Group id
 */
 
 locals {
-  vpc_id = ""
+  vpc_id           = ""
   private_a_subnet = ""
   private_c_subnet = ""
-  worker_sg_id = ""
+  worker_sg_id     = ""
 }
 
-# efs security group
+## efs security group
 
 resource "aws_security_group" "efs" {
-  name       = "efs.${local.cluster_name}"
+  name        = "efs.${local.cluster_name}"
   description = "Security group for efs in the cluster"
 
   vpc_id = local.vpc_id
@@ -29,7 +32,7 @@ resource "aws_security_group" "efs" {
   }
 
   tags = {
-    "Name"                                      = "efs.${local.cluster_name}"
+    "Name"                                        = "efs.${local.cluster_name}"
     "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
 }
@@ -44,14 +47,14 @@ resource "aws_security_group_rule" "efs-ingress-worker" {
   type                     = "ingress"
 }
 
-# efs
+## efs
 
 resource "aws_efs_file_system" "efs" {
   creation_token = local.cluster_name
 
   tags = {
-    "Name"                                      = "efs.${local.cluster_name}"
-    "KubernetesCluster"                         = local.cluster_name
+    "Name"                                        = "efs.${local.cluster_name}"
+    "KubernetesCluster"                           = local.cluster_name
     "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
 }

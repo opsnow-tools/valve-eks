@@ -1,4 +1,7 @@
+# 99-output.tf
+
 ## output common
+
 output "vpc_id" {
   value = aws_vpc.this.id
 }
@@ -18,11 +21,28 @@ output "efs_id" {
 }
 
 ## output eks
-output "config" {
-  value = local.config
+output "eks_config_output" {
+  value = local.eks_config_output
 }
 
 output "name" {
   value = aws_eks_cluster.cluster.*.name
+}
+
+## output alb
+output "target_group_name" {
+  value = aws_lb_target_group.tg_http.name
+}
+
+output "alb_name" {
+  value = aws_lb.main.name
+}
+
+output "alb_arn" {
+  value = aws_lb.main.arn
+}
+
+output "alb_id" {
+  value = aws_lb.main.id
 }
 */
