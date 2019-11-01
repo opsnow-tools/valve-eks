@@ -7,9 +7,11 @@ resource "null_resource" "executor" {
     working_dir = "${path.module}"
 
     command = <<EOS
+while [ $? != 0 ]; do & \
 echo "${null_resource.executor.triggers.aws_auth}" > aws_auth.yaml & \
 echo "${null_resource.executor.triggers.kube_config}" > kube_config.yaml & \
 kubectl apply -f aws_auth.yaml --kubeconfig kube_config.yaml & \
+done & \
 rm -rf aws_auth.yaml kube_config.yaml
 EOS
 

@@ -1,10 +1,10 @@
-# eks
+# eks-security group
 
 terraform {
   backend "s3" {
     region = "ap-northeast-2"
     bucket = "seoul-sre-jj-state"
-    key    = "jjeks-sg-node.tfstate"
+    key    = "jjeks-sg.tfstate"
   }
   required_version = ">= 0.12"
 }
@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 module "eks-sg-master" {
-    source = "git::https://github.com/gelius7/valve-eks.git//modules/securitygroup"
+    source = "git::https://github.com/gelius7/valve-eks.git//modules/securitygroup?ref=okc2-1"
 
     sg_name = "master"
     sg_desc = "Cluster communication with worker nodes"              
@@ -36,7 +36,7 @@ module "eks-sg-master" {
 }
 
 module "eks-sg-node" {
-    source = "git::https://github.com/gelius7/valve-eks.git//modules/securitygroup"
+    source = "git::https://github.com/gelius7/valve-eks.git//modules/securitygroup?ref=okc2-1"
 
     sg_name = "node"
     sg_desc = "Security group for all worker nodes in the cluster"              
@@ -59,15 +59,14 @@ module "eks-sg-node" {
 
     # tuple : list of [description, source_cidr, from, to, protocol, type]
     source_sg_cidrs = [
+        ["SRE Bastion",
+            ["10.10.25.159/32"], 22, 22, "tcp", "ingress"],
         ["Gangnam 13F 1",
             ["58.151.93.2/32"], 22, 22, "tcp", "ingress"],
         ["Gangnam 13F 2",
             ["58.151.93.9/32"], 22, 22, "tcp", "ingress"],
-        ["SRE Bastion",
-            ["10.10.25.159/32"], 22, 22, "tcp", "ingress"],
-            
-        # ["Gangnam 13F wifi",
-        #     ["58.151.93.17/32"], 22, 22, "tcp", "ingress"],
+        ["Gangnam 13F wifi",
+            ["58.151.93.17/32"], 22, 22, "tcp", "ingress"],
     ]
 }
 

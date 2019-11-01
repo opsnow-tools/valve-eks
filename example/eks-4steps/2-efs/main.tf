@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 module "efs" {
-    source = "git::https://github.com/gelius7/valve-eks.git//modules/efs"
+    source = "git::https://github.com/gelius7/valve-eks.git//modules/efs?ref=okc2-1"
 
     region = "ap-northeast-2"
     city   = "SEOUL"

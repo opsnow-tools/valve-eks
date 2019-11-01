@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 module "eks-compute" {
-  source = "git::https://github.com/gelius7/valve-eks.git//modules/eks-compute"
+  source = "git::https://github.com/gelius7/valve-eks.git//modules/eks-compute?ref=okc2-1"
 
   region = "ap-northeast-2"
   city   = "SEOUL"
@@ -77,5 +77,5 @@ data "aws_caller_identity" "current" {
 }
 
 output "config" {
-    value = module.eks-domain.config
+    value = module.eks-compute.config
 }
