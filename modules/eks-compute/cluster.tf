@@ -8,7 +8,7 @@ resource "aws_eks_cluster" "cluster" {
   vpc_config {
     subnet_ids         = var.subnet_ids
     security_group_ids = [
-        var.master_sg_id != "" ? var.master_sg_id : data.aws_security_group.master_sg_id.id
+        aws_security_group.cluster.id,
       ]
   }
 

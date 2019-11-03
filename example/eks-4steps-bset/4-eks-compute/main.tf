@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     region = "ap-northeast-2"
     bucket = "seoul-sre-jj-state"
-    key    = "jjeks-compute.tfstate"
+    key    = "jjeks-compute-bset.tfstate"
   }
   required_version = ">= 0.12"
 }
@@ -13,12 +13,12 @@ provider "aws" {
 
 module "eks-compute" {
   source = "../../../modules/eks-compute"
-  # source = "git::https://github.com/gelius7/valve-eks.git//modules/eks-compute?ref=okc2-1"
+#   source = "git::https://github.com/gelius7/valve-eks.git//modules/eks-compute?ref=okc2-1"
 
   region = "ap-northeast-2"
   city   = "SEOUL"
   stage  = "SRE"
-  name   = "JJ0"
+  name   = "JJ1"
   suffix = "EKS"
 
   kubernetes_version = "1.14"
@@ -59,11 +59,11 @@ module "eks-compute" {
       username = "jamje.kim"
       group    = "system:masters"
     },
-    # {
-    #   user     = "user/sre1"
-    #   username = "sre1"
-    #   group    = ""
-    # },
+    {
+      user     = "user/sre1"
+      username = "sre1"
+      group    = ""
+    },
   ]
 
 
