@@ -1,13 +1,4 @@
-# 53-worker-security-group.tf
-
-## local variable
-/*
-vpc_id : AWS VPC id.
-         [Priority] aws_vpc.this.id > local.vpc_id > "vpc-0xxxxxxxx"
-allow_ips : Allow ips in Kubernetes worker node. Same with vpc_id.
-*/
-
-## worker security group
+# worker security group
 
 resource "aws_security_group" "worker" {
   name        = "nodes.${local.lower_name}"
