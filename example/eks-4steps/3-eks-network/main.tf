@@ -12,7 +12,8 @@ provider "aws" {
 }
 
 module "eks-domain" {
-  source = "git::https://github.com/gelius7/valve-eks.git//modules/eks-network?ref=okc2-1"
+  source = "../../../modules/eks-network"
+  # source = "git::https://github.com/gelius7/valve-eks.git//modules/eks-network?ref=okc2-1"
 
   root_domain = "opsnow.io"
 
