@@ -17,49 +17,21 @@ module "eks-sg-node" {
     source = "../../../modules/securitygroup-inline"
     # source = "git::https://github.com/gelius7/valve-eks.git//modules/securitygroup?ref=okc2-1"
 
-    sg_name = "node"
-    sg_desc = "Security group for all worker nodes in the cluster"              
+    sg_name = var.sg_name
+    sg_desc = var.sg_desc
 
-    region = "ap-northeast-2"
-    city   = "SEOUL"
-    stage  = "SRE"
-    name   = "JJ0"
-    suffix = "EKS"
+    region = var.region
+    city   = var.city
+    stage  = var.stage
+    name   = var.name
+    suffix = var.suffix
 
-    vpc_id = "vpc-07d117148dfa20c4b"
+    vpc_id = var.vpc_id
 
     # tuple : list of {description, source_cidr, from, to, protocol, type}
-    source_sg_cidrs = [
-        {
-            desc = "SRE Bastion",
-            cidrs = ["10.10.25.159/32"],
-            from = 22,
-            to = 22,
-            protocol = "tcp",
-            type = "ingress"
-        },
-        {
-            desc = "Gangnam 13F 1, 2, wifi",
-            cidrs = ["58.151.93.2/32", "58.151.93.9/32", "58.151.93.17/32"],
-            from = 22,
-            to = 22,
-            protocol = "tcp",
-            type = "ingress"
-        },
-        {
-            desc = "JJ hometown wifi",
-            cidrs = ["183.99.245.239/32"],
-            from = 22,
-            to = 22,
-            protocol = "tcp",
-            type = "ingress"
-        },
-    ]
-}
+    source_sg_cidrs = var.source_sg_cidrs
 
-# output "sg-master" {
-#     value = "master security group id : ${module.eks-sg-master.sg_id}"
-# }
+}
 
 output "sg-node" {
     value = "node security group id : ${module.eks-sg-node.sg_id}"

@@ -16,8 +16,6 @@
 
 * resource "aws_security_group" "alb" 
 
-* resource "aws_lb_target_group" "tg_http"
-
 * resource "aws_lb_listener" "frontend_http"
 
 * resource "aws_lb_listener" "frontend_https"

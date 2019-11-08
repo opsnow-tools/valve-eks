@@ -43,30 +43,30 @@ resource "aws_security_group" "alb" {
   }
 }
 
-resource "aws_lb_target_group" "tg_http" {
-  name     = "${local.upper_name}-ALB"
-  vpc_id   = var.vpc_id
-  port     = local.target_group_port
-  protocol = "HTTP"
+# resource "aws_lb_target_group" "tg_http" {
+#   name     = "${local.upper_name}-ALB"
+#   vpc_id   = var.vpc_id
+#   port     = local.target_group_port
+#   protocol = "HTTP"
 
-  health_check {
-    interval            = 30
-    path                = local.health_check_path
-    port                = "traffic-port"
-    protocol            = "HTTP"
-    timeout             = 5
-    healthy_threshold   = 3
-    unhealthy_threshold = 3
-    matcher             = 200
-  }
+#   health_check {
+#     interval            = 30
+#     path                = local.health_check_path
+#     port                = "traffic-port"
+#     protocol            = "HTTP"
+#     timeout             = 5
+#     healthy_threshold   = 3
+#     unhealthy_threshold = 3
+#     matcher             = 200
+#   }
 
-  target_type = "instance"
+#   target_type = "instance"
 
-  ## Create new target group before destroy current target group
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+#   ## Create new target group before destroy current target group
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
 
 resource "aws_lb_listener" "frontend_http" {
   load_balancer_arn = aws_lb.main.arn
@@ -74,7 +74,7 @@ resource "aws_lb_listener" "frontend_http" {
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_lb_target_group.tg_http.id
+    target_group_arn = data.aws_lb_target_group.tg_http.id
     type             = "forward"
   }
 }
@@ -87,7 +87,7 @@ resource "aws_lb_listener" "frontend_https" {
   ssl_policy        = local.ssl_policy
 
   default_action {
-    target_group_arn = aws_lb_target_group.tg_http.arn
+    target_group_arn = data.aws_lb_target_group.tg_http.arn
     type             = "forward"
   }
 }

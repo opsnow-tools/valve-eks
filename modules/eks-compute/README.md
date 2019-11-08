@@ -50,13 +50,7 @@
 
 * data "aws_iam_policy_document" "worker_autoscaling" {
 
-* data "aws_security_group" "master_sg_id" {
-
 * data "aws_security_group" "worker_sg_id" {
-
-* data "aws_lb_target_group" "http" {
-
-* data "aws_availability_zones" "azs" {}
 
 * data "aws_caller_identity" "current" {}
 

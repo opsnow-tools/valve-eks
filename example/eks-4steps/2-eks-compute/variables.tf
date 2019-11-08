@@ -102,6 +102,16 @@ variable "local_exec_interpreter" {
   default     = ["/bin/sh", "-c"]
 }
 
+variable "buckets" {
+  type    = "list"
+  default = []
+}
+
+variable "master_sg_id" {
+  description = "EKS master security group. e.g. sg-xxxxxx"
+  type        = "string"
+  default     = ""
+}
 
 variable "worker_sg_id" {
   description = "EKS worker security group. e.g. sg-xxxxxx"
@@ -109,4 +119,14 @@ variable "worker_sg_id" {
   default     = ""
 }
 
+variable "target_group_http_arn" {
+  description = "Target group at ELB"
+  type        = "string"
+  default     = ""
+}
 
+variable "public_subnet_ids" {
+  description = "List of Public Subnet Ids"
+  type        = "list"
+  default     = []
+}

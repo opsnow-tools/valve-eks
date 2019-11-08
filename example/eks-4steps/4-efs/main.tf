@@ -17,19 +17,15 @@ module "efs" {
     source = "../../../modules/efs"
     # source = "git::https://github.com/gelius7/valve-eks.git//modules/efs?ref=okc2-1"
 
-    region = "ap-northeast-2"
-    city   = "SEOUL"
-    stage  = "SRE"
-    name   = "JJ0"
-    suffix = "EKS"
+    region = var.region
+    city   = var.city
+    stage  = var.stage
+    name   = var.name
+    suffix = var.suffix
 
-    vpc_id = "vpc-07d117148dfa20c4b"
+    vpc_id = var.vpc_id
 
-    subnet_ids = [
-        "subnet-001edd00f119acf6e",
-        "subnet-07398d9f9131a3292",
-        "subnet-03860c3c405a4870c",
-    ]
+    subnet_ids = var.subnet_ids
 
     # default node.${local.lower_name}
     # mount_target_sg = "sg-0c4c6b74de6721fa6"
