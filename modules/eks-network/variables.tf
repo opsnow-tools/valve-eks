@@ -40,3 +40,8 @@ variable "worker_sg_id" {
   type        = "string"
   default     = ""
 }
+
+variable "weighted_routing" {
+  description = "weighted_routing_policy aws_route53_record.address"
+  default     = 100
+}

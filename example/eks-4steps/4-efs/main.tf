@@ -27,8 +27,8 @@ module "efs" {
 
     subnet_ids = var.subnet_ids
 
-    # default node.${local.lower_name}
-    # mount_target_sg = "sg-0c4c6b74de6721fa6"
+    #### default node.${local.lower_name}
+    # mount_target_sg = var.mount_target_sg
 }
 
 output "efs_id" {

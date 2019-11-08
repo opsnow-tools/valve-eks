@@ -1,6 +1,10 @@
 
-output "address" {
-    value = aws_route53_record.address.name
+output "address_bset" {
+    value = aws_route53_record.address_bset.name
+}
+
+output "address_represent" {
+    value = aws_route53_record.address_represent.name
 }
 
 output "import_command1" {

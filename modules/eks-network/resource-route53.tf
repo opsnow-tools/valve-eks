@@ -6,7 +6,7 @@ resource "aws_route53_record" "address" {
   type    = "A"
 
   weighted_routing_policy {
-    weight = 100
+    weight = var.weighted_routing
   }
 
   set_identifier = "NewSet"

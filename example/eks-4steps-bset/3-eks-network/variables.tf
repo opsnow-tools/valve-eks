@@ -41,7 +41,17 @@ variable "worker_sg_id" {
   default     = ""
 }
 
-variable "weighted_routing" {
+variable "name_represent" {
+  description = "Name of the cluster a set, e.g: DEMO_REPRESENT"
+  default     = ""
+}
+
+variable "weighted_routing_represent" {
+  description = "weighted_routing_policy aws_route53_record.address"
+  default     = 0
+}
+
+variable "weighted_routing_new" {
   description = "weighted_routing_policy aws_route53_record.address"
   default     = 100
 }

@@ -17,3 +17,5 @@ public_subnet_ids = [
   "subnet-0xxxxxxxxxxxxxxxb",
   "subnet-0xxxxxxxxxxxxxxxc",
 ]
+
+weighted_routing = 100
