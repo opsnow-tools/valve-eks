@@ -28,7 +28,7 @@ module "efs" {
     subnet_ids = var.subnet_ids
 
     #### default node.${local.lower_name}
-    # mount_target_sg = var.mount_target_sg
+    mount_target_sg = var.mount_target_sg
 }
 
 output "efs_id" {
@@ -39,10 +39,10 @@ output "efs_mount_target_ids" {
     value = "\nterraform import 'module.efs.aws_efs_mount_target.efs[0]' ${join("\nterraform import 'module.efs.aws_efs_mount_target.efs[*]' ", module.efs.efs_mount_target_ids)}\n"
 }
 
-output "aws_security_group_id" {
-    value = "\nterraform import module.efs.aws_security_group.efs ${module.efs.aws_security_group_id}\n"
-}
+# output "aws_security_group_id" {
+#     value = "\nterraform import module.efs.aws_security_group.efs ${module.efs.aws_security_group_id}\n"
+# }
 
-output "aws_security_group_rule_id" {
-    value = "\nterraform import module.efs.aws_security_group_rule.efs-ingress-worker ${module.efs.aws_security_group_rule_import_param}\n"
-}
+# output "aws_security_group_rule_id" {
+#     value = "\nterraform import module.efs.aws_security_group_rule.efs-ingress-worker ${module.efs.aws_security_group_rule_import_param}\n"
+# }

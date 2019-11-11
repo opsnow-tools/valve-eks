@@ -33,6 +33,6 @@ variable "subnet_ids" {
 
 variable "mount_target_sg" {
   description = "Security Group ID for mount target"
-  type        = "string"
-  default     = ""
+  type        = "list"
+  default     = []
 }
