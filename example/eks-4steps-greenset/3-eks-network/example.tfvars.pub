@@ -1,0 +1,25 @@
+# common
+
+region = "ap-northeast-2"
+city   = "SEOUL"
+stage  = "STAGE"
+name   = "YOURNAME"
+suffix = "EKS"
+
+vpc_id = "vpc-0xxxxxxxxxxxxxx"
+
+# EKS network variables 
+
+root_domain = "yourdomain.com"
+
+public_subnet_ids = [
+  "subnet-0xxxxxxxxxxxxxxxa",
+  "subnet-0xxxxxxxxxxxxxxxb",
+  "subnet-0xxxxxxxxxxxxxxxc",
+]
+
+
+  name_represent = "Before_YOURNAME"
+
+  weighted_routing_represent = 0
+  weighted_routing_new = 100
