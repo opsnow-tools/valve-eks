@@ -4,6 +4,17 @@
 
 * 현재는 ALB, ACM, Route53 을 정의하고 있으며, 추후 NLB 추가를 고려하고 있습니다.
 
+* 아래 그림에서 EKS-Network 부분을 가리킵니다.
+
+## Draw
+
+<span style="display:block;text-align:center">![](./img-draw-valve-eks-4steps.svg)</span>
+<span style="display:block;text-align:center">valve eks 전체</span>
+
+## Graph
+
+> CMD : terraform graph | dot -Tsvg > graph.svg
+
 ## Resource
 
 * resource "aws_acm_certificate" "default"

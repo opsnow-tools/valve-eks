@@ -1,6 +1,8 @@
 # EKS network module
 
-* AWS EKS 모듈에서 사용할 network 자원들을 생성합니다.
+* EKS 로 이관할때 새로운 클러스터(Green set)의 network 자원들을 생성합니다.
+
+* 
 
 * 현재는 ALB, ACM, Route53 을 정의하고 있으며, 추후 NLB 추가를 고려하고 있습니다.
 

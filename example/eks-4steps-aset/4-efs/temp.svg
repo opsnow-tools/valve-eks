@@ -1,0 +1,18 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] module.efs.aws_efs_file_system.efs" [label = "module.efs.aws_efs_file_system.efs", shape = "box"]
+		"[root] module.efs.aws_efs_mount_target.efs" [label = "module.efs.aws_efs_mount_target.efs", shape = "box"]
+		"[root] module.efs.aws_security_group.efs" [label = "module.efs.aws_security_group.efs", shape = "box"]
+		"[root] module.efs.aws_security_group_rule.efs-ingress-worker" [label = "module.efs.aws_security_group_rule.efs-ingress-worker", shape = "box"]
+		"[root] module.efs.data.aws_security_group.mount_target_sg" [label = "module.efs.data.aws_security_group.mount_target_sg", shape = "box"]
+
+		"[root] module.efs.aws_efs_mount_target.efs" -> "[root] module.efs.aws_efs_file_system.efs"
+		"[root] module.efs.aws_efs_mount_target.efs" -> "[root] module.efs.aws_security_group.efs"
+		"[root] module.efs.aws_security_group_rule.efs-ingress-worker" -> "[root] module.efs.aws_security_group.efs"
+		"[root] module.efs.aws_security_group_rule.efs-ingress-worker" -> "[root] module.efs.data.aws_security_group.mount_target_sg"
+
+	}
+}
+
