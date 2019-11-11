@@ -4,7 +4,7 @@
 
 ## Graph
 
-![](./graph.svg)
+![](./img/graph.svg)
 
 > CMD : terraform graph | dot -Tsvg > graph.svg
 

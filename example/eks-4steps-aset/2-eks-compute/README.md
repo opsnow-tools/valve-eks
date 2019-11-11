@@ -4,7 +4,7 @@
 
 ## Draw
 
-![](./img-draw-valve-eks-4steps.svg)
+![](./img/img-draw-valve-eks-4steps.svg)
 
 ## Detail
 

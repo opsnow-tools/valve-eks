@@ -30,7 +30,7 @@
 
 ## Draw
 
-<span style="display:block;text-align:center">![](./img-draw-valve-eks-4steps-migration.svg)</span>
+<span style="display:block;text-align:center">![](./img/img-draw-valve-eks-4steps-migration.svg)</span>
 <span style="display:block;text-align:center">valve eks 이관</span>
 
 ## Graph
