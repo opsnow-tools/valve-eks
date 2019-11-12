@@ -45,6 +45,7 @@ versions
 terraform.tfstate.backup
 terraform.tfstate
 terraform.tfplan
+*.tfvars
 
 # Temp
 .output/

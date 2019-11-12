@@ -1,0 +1,46 @@
+# common
+
+region = "ap-northeast-2"
+city   = "SEOUL"
+stage  = "STAGE"
+name   = "YOURNAME"
+suffix = "EKS"
+
+vpc_id = "vpc-0xxxxxxxxxxxxxx"
+
+kubernetes_version = "1.14"
+
+subnet_ids = [
+  "subnet-0xxxxxxxxxxxxxxxa",
+  "subnet-0xxxxxxxxxxxxxxxb",
+  "subnet-0xxxxxxxxxxxxxxxc",
+]
+
+public_subnet_ids = [
+  "subnet-0xxxxxxxxxxxxxxxa",
+  "subnet-0xxxxxxxxxxxxxxxb",
+  "subnet-0xxxxxxxxxxxxxxxc",
+]
+
+instance_type = "m5.large"
+
+mixed_instances = ["m4.large", "r4.large", "r5.large"]
+
+volume_size = "64"
+
+min = "1"
+max = "10"
+
+on_demand_base = "0"
+on_demand_rate = "0"
+
+key_name = "SEOUL-YOUR-KEY-PAIR"
+
+
+map_users = [
+  {
+    user     = "user/you.kim"
+    username = "you.kim"
+    group    = "system:masters"
+  },
+]

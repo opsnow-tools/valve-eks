@@ -1,0 +1,17 @@
+# common
+
+region = "ap-northeast-2"
+city   = "SEOUL"
+stage  = "STAGE"
+name   = "YOURNAME"
+suffix = "EKS"
+
+vpc_id = "vpc-0xxxxxxxxxxxxxx"
+
+# EFS variables 
+
+subnet_ids = [
+  "subnet-0xxxxxxxxxxxxxxxa",
+  "subnet-0xxxxxxxxxxxxxxxb",
+  "subnet-0xxxxxxxxxxxxxxxc",
+]

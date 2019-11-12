@@ -43,7 +43,7 @@ resource "aws_security_group_rule" "efs-ingress-worker" {
   source_security_group_id = local.worker_sg_id
   from_port                = 2049
   to_port                  = 2049
-  protocol                 = "-1"
+  protocol                 = "tcp"
   type                     = "ingress"
 }
 
