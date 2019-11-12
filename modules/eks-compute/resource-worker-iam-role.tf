@@ -56,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "worker_autoscaling" {
 
 resource "aws_iam_policy" "worker_autoscaling" {
   name        = "${aws_iam_role.worker.name}-AUTOSCALING"
-  description = "Autoscaling policy for cluster ${local.lower_name}"
+  description = "Autoscaling policy for cluster ${local.upper_name}"
   policy      = "${data.aws_iam_policy_document.worker_autoscaling.json}"
   path        = "/"
 }
@@ -91,7 +91,7 @@ data "aws_iam_policy_document" "worker_autoscaling" {
 
     condition {
       test     = "StringEquals"
-      variable = "autoscaling:ResourceTag/kubernetes.io/cluster/${local.lower_name}"
+      variable = "autoscaling:ResourceTag/kubernetes.io/cluster/${local.upper_name}"
       values   = ["owned"]
     }
 
