@@ -5,7 +5,7 @@ data "aws_route53_zone" "selected" {
 }
 
 data "aws_security_group" "worker_sg_id" {
-  name = "node.${local.lower_name}"
+  name = "${local.upper_name}-ALLOWS"
 }
 
 data "aws_lb_target_group" "tg_http" {

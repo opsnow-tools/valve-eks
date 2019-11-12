@@ -1,7 +1,7 @@
 # efs security group
 
 resource "aws_security_group" "efs" {
-  name        = "efs.${local.lower_name}"
+  name        = "${local.upper_name}-EFS"
   description = "Security group for efs in the cluster"
 
   lifecycle {
@@ -18,7 +18,7 @@ resource "aws_security_group" "efs" {
   }
 
   tags = {
-      Name      = "efs.${local.lower_name}",
+      Name      = "${local.upper_name}-EFS",
       SG_Groups = "${local.lower_name}"
   }
 }

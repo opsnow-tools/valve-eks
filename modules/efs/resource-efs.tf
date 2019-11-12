@@ -4,7 +4,7 @@ resource "aws_efs_file_system" "efs" {
   creation_token = "${local.lower_name}"
 
   tags = {
-    "Name"                                      = "efs.${local.lower_name}"
+    "Name"                                      = "${local.upper_name}-EFS"
     "KubernetesCluster"                         = local.lower_name
   }
 }

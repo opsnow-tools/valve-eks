@@ -4,7 +4,7 @@ resource "null_resource" "executor" {
   depends_on = ["aws_eks_cluster.cluster"]
 
   provisioner "local-exec" {
-    working_dir = "${path.module}"
+    working_dir = "${path.root}"
 
     command = <<EOS
 echo "${null_resource.executor.triggers.aws_auth}" > aws_auth.yaml; \
