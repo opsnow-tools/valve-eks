@@ -18,7 +18,6 @@ resource "aws_security_group" "efs" {
   }
 
   tags = {
-
       Name      = "efs-sg.${local.lower_name}",
       SG_Groups = "${local.lower_name}"
   }

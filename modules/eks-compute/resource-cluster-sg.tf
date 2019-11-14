@@ -1,7 +1,7 @@
 ## cluster security group
 
 resource "aws_security_group" "cluster" {
-  name        = "${local.upper_name}-CLUSTER"
+  name        = "masters.${local.lower_name}"
   description = "Cluster communication with worker nodes"
 
   vpc_id = var.vpc_id
@@ -14,8 +14,8 @@ resource "aws_security_group" "cluster" {
   }
 
   tags = {
-    "Name"                                      = "${local.upper_name}-CLUSTER"
-    "kubernetes.io/cluster/${local.upper_name}" = "owned"
+    "Name"                                      = "masters.${local.lower_name}"
+    "kubernetes.io/cluster/${local.lower_name}" = "owned"
   }
 }
 

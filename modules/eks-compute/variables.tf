@@ -109,9 +109,4 @@ variable "worker_sg_id" {
   default     = ""
 }
 
-variable "aws_access_key_id" { 
-  description = "AWS Access key ID"
-  type        = "string"
-  default     = ""
-}
 

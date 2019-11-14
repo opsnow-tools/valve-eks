@@ -6,7 +6,7 @@ data "template_file" "kube_config" {
   vars = {
     CERTIFICATE     = "${aws_eks_cluster.cluster.certificate_authority.0.data}"
     MASTER_ENDPOINT = "${aws_eks_cluster.cluster.endpoint}"
-    CLUSTER_NAME    = "${local.upper_name}"
+    CLUSTER_NAME    = "${local.lower_name}"
   }
 }
 
