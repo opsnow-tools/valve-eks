@@ -4,7 +4,7 @@ resource "aws_acm_certificate" "default" {
   validation_method = "DNS"
 
   tags = {
-    Name                = "${local.upper_name}-ACM"
+    Name                = "acm.${local.lower_name}"
     KubernetesCluster   = local.lower_name
     Environment         = var.name
   }

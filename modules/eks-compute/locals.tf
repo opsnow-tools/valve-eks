@@ -16,11 +16,11 @@ locals {
     },
     {
       key                 = "KubernetesCluster"
-      value               = "${local.upper_name}"
+      value               = "${local.lower_name}"
       propagate_at_launch = true
     },
     {
-      key                 = "kubernetes.io/cluster/${local.upper_name}"
+      key                 = "kubernetes.io/cluster/${local.lower_name}"
       value               = "owned"
       propagate_at_launch = true
     },
@@ -39,7 +39,7 @@ locals {
   --enable-docker-bridge true \
   --apiserver-endpoint '${aws_eks_cluster.cluster.endpoint}' \
   --b64-cluster-ca '${aws_eks_cluster.cluster.certificate_authority.0.data}' \
-  '${local.upper_name}'
+  '${local.lower_name}'
 
 sudo touch /etc/security/limits.d/limit.conf
 sudo echo "*   hard  nofile  65535" | sudo tee --append /etc/security/limits.d/limit.conf
@@ -53,7 +53,7 @@ locals {
 #
 
 # kube config
-aws eks update-kubeconfig --name ${local.upper_name} --alias ${local.upper_name}
+aws eks update-kubeconfig --name ${local.lower_name} --alias ${local.lower_name}
 
 # or
 mkdir -p ~/.kube && cp .output/kube_config.yaml ~/.kube/config
