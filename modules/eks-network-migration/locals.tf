@@ -9,7 +9,7 @@ locals {
   root_domain = var.root_domain
   base_domain = "${lower(local.record_full_name)}"
 
-  record_full_name_represent = "*.${var.name_represent}.${data.aws_route53_zone.selected.name}"
+  record_full_name_represent = "*.${data.aws_route53_zone.selected.name}"
   base_domain_represent = "${lower(local.record_full_name_represent)}"
 
 }

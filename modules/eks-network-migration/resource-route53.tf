@@ -9,7 +9,7 @@ resource "aws_route53_record" "address_bset" {
     weight = var.weighted_routing_new
   }
 
-  set_identifier = "NewSet"
+  set_identifier = "subSet"
 
   alias {
       name = "${aws_lb.main.dns_name}"
@@ -29,7 +29,7 @@ resource "aws_route53_record" "address_represent" {
     weight = var.weighted_routing_represent
   }
 
-  set_identifier = "OldSet"
+  set_identifier = "NewSet"
 
   alias {
       name = "${aws_lb.main.dns_name}"
