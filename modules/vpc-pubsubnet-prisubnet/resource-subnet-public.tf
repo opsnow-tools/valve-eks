@@ -30,7 +30,7 @@ resource "aws_route_table" "public" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = var.vpc_id == "" ? aws_internet_gateway.this.id : data.aws_internet_gateway.this.id
+    gateway_id = var.vpc_id == "" ? aws_internet_gateway.this[0].id : data.aws_internet_gateway.this[0].id
   }
 
   tags = merge(
