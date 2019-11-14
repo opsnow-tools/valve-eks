@@ -1,7 +1,7 @@
 # security group
 
 resource "aws_security_group" "this" {
-    name        = "${var.sg_name}.${local.lower_name}"
+    name        = "${local.upper_name}-${var.sg_name}"
     description = "${var.sg_desc}"
 
     vpc_id = "${var.vpc_id}"
@@ -36,7 +36,7 @@ resource "aws_security_group" "this" {
     }
 
     tags = {
-        Name = "${var.sg_name}.${local.lower_name}"
+        Name = "${local.upper_name}-${var.sg_name}"
         SG_Groups = "${local.lower_name}"
 
     }

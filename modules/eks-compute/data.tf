@@ -1,7 +1,7 @@
 # data
 
 data "aws_security_group" "worker_sg_id" {
-  name = "node.${local.lower_name}"
+  name = "${local.upper_name}-ALLOWS"
 }
 
 data "aws_caller_identity" "current" {}

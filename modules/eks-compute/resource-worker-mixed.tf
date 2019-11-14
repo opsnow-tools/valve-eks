@@ -3,7 +3,7 @@
 resource "aws_launch_template" "worker-mixed" {
   count = "${length(var.mixed_instances) > 0 ? 1 : 0}"
 
-  name_prefix   = "${local.upper_name}-MIXED-"
+  name_prefix   = "${local.upper_name}-ASG-"
   image_id             = "${data.aws_ami.worker.id}"
   instance_type = "${var.instance_type}"
   user_data     = "${base64encode(local.userdata)}"
@@ -36,7 +36,7 @@ resource "aws_launch_template" "worker-mixed" {
 resource "aws_autoscaling_group" "worker-mixed" {
   count = "${length(var.mixed_instances) > 0 ? 1 : 0}"
 
-  name = "${local.upper_name}-MIXED"
+  name = "${local.upper_name}-ASG"
 
   min_size = "${var.min}"
   max_size = "${var.max}"
