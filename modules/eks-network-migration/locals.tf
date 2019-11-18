@@ -5,7 +5,7 @@ locals {
   upper_name = "${upper(local.full_name)}"
   lower_name = "${lower(local.full_name)}"
 
-  record_full_name = "*.${var.name}.${data.aws_route53_zone.selected.name}"
+  record_full_name = "*.${var.cur_set}.${data.aws_route53_zone.selected.name}"
   root_domain = var.root_domain
   base_domain = "${lower(local.record_full_name)}"
 
