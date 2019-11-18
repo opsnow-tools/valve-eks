@@ -50,3 +50,8 @@ variable "weighted_routing_new" {
   description = "weighted_routing_policy aws_route53_record.address"
   default     = 100
 }
+
+variable "cur_set" {
+  description = "Name of the cluster, e.g: DEMO"
+  default     = "B"
+}
