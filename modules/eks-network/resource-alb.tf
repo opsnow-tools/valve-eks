@@ -38,6 +38,15 @@ resource "aws_security_group" "alb" {
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress {
+    description     = "Allow worker Kubernetes"
+    security_groups = [data.aws_security_group.worker_sg_id.id]
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+  }
+
   tags = {
       "Name" = "${local.upper_name}-ALB"
   }
