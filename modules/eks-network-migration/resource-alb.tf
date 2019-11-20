@@ -25,6 +25,13 @@ resource "aws_security_group" "alb" {
   vpc_id = var.vpc_id
   name   = "${local.upper_name}-ALB"
 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
     from_port   = 80
     to_port     = 80
@@ -37,14 +44,6 @@ resource "aws_security_group" "alb" {
     to_port     = 443
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description     = "Allow worker Kubernetes"
-    security_groups = [data.aws_security_group.worker_sg_id.id]
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
   }
 
   tags = {
