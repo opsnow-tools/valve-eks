@@ -7,7 +7,8 @@ resource "aws_lb" "main" {
   load_balancer_type = "application"
   security_groups    = [
                         aws_security_group.alb.id, 
-                        var.worker_sg_id != "" ? var.worker_sg_id : data.aws_security_group.worker_sg_id.id,
+                        # var.worker_sg_id != "" ? var.worker_sg_id : data.aws_security_group.worker_sg_id.id,
+                        var.worker_sg_id,
                       ]
   subnets            = var.public_subnet_ids
 
@@ -82,7 +83,8 @@ resource "aws_lb_listener" "frontend_http" {
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = data.aws_lb_target_group.tg_http.id
+    # target_group_arn = data.aws_lb_target_group.tg_http.id
+    target_group_arn = var.target_group_arn
     type             = "forward"
   }
 }
@@ -95,7 +97,8 @@ resource "aws_lb_listener" "frontend_https" {
   ssl_policy        = local.ssl_policy
 
   default_action {
-    target_group_arn = data.aws_lb_target_group.tg_http.arn
+    # target_group_arn = data.aws_lb_target_group.tg_http.arn
+    target_group_arn = var.target_group_arn
     type             = "forward"
   }
 }

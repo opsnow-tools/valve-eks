@@ -42,7 +42,8 @@ resource "aws_security_group_rule" "worker-ingress-cluster" {
 resource "aws_security_group_rule" "worker-ingress-sg" {
   description              = "Allow workstation to communicate with the cluster API Server"
   security_group_id        = aws_security_group.worker.id
-  source_security_group_id = var.worker_sg_id != "" ? var.worker_sg_id : data.aws_security_group.worker_sg_id.id
+  # source_security_group_id = var.worker_sg_id != "" ? var.worker_sg_id : data.aws_security_group.worker_sg_id.id
+  source_security_group_id = var.worker_sg_id
   from_port                = 0
   to_port                  = 65535
   protocol                 = "-1"
