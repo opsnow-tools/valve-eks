@@ -1,0 +1,49 @@
+aws_region = "ap-northeast-2"
+city   = "SEOUL"
+stage  = "SRE"
+name   = "ANDY"
+suffix = "EKS"
+
+vpc_cidr = "10.101.0.0/16"
+public_subnet_cidrs = [
+  "10.101.25.0/24",
+  "10.101.26.0/24",
+  "10.101.27.0/24",
+]
+private_subnet_cidrs = [
+  "10.101.28.0/24",
+  "10.101.29.0/24",
+  "10.101.30.0/24",
+]
+sg_name = "node"
+sg_desc = "Security group for all worker nodes in the cluster"             
+source_sg_cidrs = [
+    {
+        desc = "Gangnam 13F 1, 2, wifi",
+        cidrs = ["58.151.93.2/32", "58.151.93.9/32", "58.151.93.17/32"],
+        from = 22,
+        to = 22,
+        protocol = "tcp",
+        type = "ingress"
+    },
+]
+
+kubernetes_version = "1.14"
+instance_type = "m5.large"
+mixed_instances = ["m4.large", "r4.large", "r5.large"]
+volume_size = "64"
+min = "1"
+max = "10"
+on_demand_base = "0"
+on_demand_rate = "0"
+key_name = "SEOUL-SRE-K8S-EKS"
+map_users = [
+  {
+    user     = "user/ounju.kim"
+    username = "ounju.kim"
+    group    = "system:masters"
+  },
+]
+
+root_domain = "opsnow.io"
+weighted_routing = 100
