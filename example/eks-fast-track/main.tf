@@ -153,7 +153,7 @@ module "efs" {
   suffix = "${var.suffix}"
   vpc_id = "${module.vpc.vpc_id}"
   subnet_ids = "${module.vpc.private_subnet_ids}"
-  mount_target_sg = ["${module.eks-sg-node.sg_id}"]
+  mount_target_sg = ["${module.eks-compute.worknode_security_group_id}"]
 }
 output "efs_id" {
     value = "\nterraform import module.efs.aws_efs_file_system.efs ${module.efs.efs_id}\n"
