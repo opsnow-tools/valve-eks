@@ -31,7 +31,7 @@ variable "source_sg_cidrs" {
 }
 variable "vpc_cidr" {
 }
-## EKS Cluster ###############################
+# EKS Cluster
 variable "kubernetes_version" {
   default = "1.12"
 }

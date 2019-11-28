@@ -1,7 +1,11 @@
 aws_region = "ap-northeast-2"
+
+# 리소스 이름에 의미있는 정보를 담기위해 아래 3개의 변수를 연결하여 하나의 변수로 만들어서 사용함.
+# ex) full_name = city + stage + name
 city   = "SEOUL"
 stage  = "SRE"
-name   = "ANDY"      # 유니크한 이름으로 변경, 예를 들면 본인 닉네임
+name   = "FASTTRACK"    # 그냥 사용해도 되지만 유니크한 이름으로 변경해도 됨
+
 suffix = "EKS"
 
 vpc_cidr = "10.101.0.0/16"    # 그냥 사용해도 되지만, 상황에 맞게 변경해서 사용 가능
@@ -25,8 +29,8 @@ sg_desc = "Security group for all worker nodes in the cluster"
 # 그냥 사용해도 되지만, 상황에 맞게 변경해서 사용 가능
 source_sg_cidrs = [
     {
-        desc = "Gangnam 13F 1, 2, wifi",
-        cidrs = ["58.***.***.***/32", "58.***.***.***/32", "58.***.***.***/32"],   # 접속 허용 IP를 설정한다. http://ipconfig.kr/ 사이트에서 NAT IP 확인해서 설정!!!
+        desc = "Gangnam 13F wifi",
+        cidrs = ["58.***.***.***/32", "58.***.***.***/32"],   # 접속 허용 IP를 설정한다. http://ipconfig.kr/ 사이트에서 NAT IP 확인해서 설정!!!
         from = 22,
         to = 22,
         protocol = "tcp",
@@ -35,13 +39,26 @@ source_sg_cidrs = [
 ]
 
 kubernetes_version = "1.14"
+
+# 쿠버네티스 워크노드에 대한 설정
+# The type of the instance.
 instance_type = "m5.large"
+
+# instance_type에 해당하는 EC2가 없는 경우 아래에 설정된 타입 중 하나를 대신 생성한다.
 mixed_instances = ["m4.large", "r4.large", "r5.large"]
+
 volume_size = "64"
 min = "1"
 max = "10"
+
+# 쿠버네티스 워크노드에 대한 오토스케일링 그룹 설정, 온 디멘드 EC2 갯수 설정
+# Absolute minimum amount of desired capacity that must be fulfilled by on-demand instances.
 on_demand_base = "0"
+
+# 쿠버네티스 워크노드에 대한 오토스케일링 그룹 설정, 온 디멘드 EC2 비율 설정
+# Percentage split between on-demand and Spot instances above the base on-demand capacity.
 on_demand_rate = "0"
+
 key_name = "SEOUL-SRE-K8S-EKS"
 
 # AWS 계정을 본인 계정으로 변경해야 함!!! 
@@ -56,4 +73,6 @@ map_users = [
 # 소유한 도메인 네임으로 변경해야 함!!!
 root_domain = "opsnow.io"
 
+# 가중치 기반 라우팅 정책, 1~255 사이의 값 설정 가능
+# https://docs.aws.amazon.com/ko_kr/Route53/latest/DeveloperGuide/routing-policy.html#routing-policy-weighted
 weighted_routing = 100
