@@ -14,7 +14,7 @@ variable "city" {
 variable "stage" {
   description = "Stage Name of the cluster, e.g: DEV"
 }
-variable "name" {
+variable "cluster_name" {
   description = "Name of the cluster, e.g: DEMO"
 }
 variable "suffix" {

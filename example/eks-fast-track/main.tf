@@ -10,7 +10,8 @@ module "vpc" {
   region = "${var.aws_region}"
   city   = "${var.city}"
   stage  = "${var.stage}"
-  name   = "${var.name}"
+  name   = var.cluster_name
+
   vpc_cidr = "${var.vpc_cidr}"
  
   public_subnet_enable = true
@@ -31,7 +32,7 @@ module "vpc" {
   private_subnet_cidrs = "${var.private_subnet_cidrs}"
   single_nat_gateway = true
   tags = {
-    "kubernetes.io/cluster/${lower(var.city)}-${lower(var.stage)}-${lower(var.name)}-eks"  = "shared"
+    "kubernetes.io/cluster/${lower(var.city)}-${lower(var.stage)}-${lower(var.cluster_name)}-eks"  = "shared"
   }
 }
 output "vpc_id" {
@@ -64,7 +65,7 @@ module "eks-sg-node" {
   region = "${var.aws_region}"
   city   = "${var.city}"
   stage  = "${var.stage}"
-  name   = "${var.name}"
+  name   = var.cluster_name
   suffix = "${var.suffix}"
   source_sg_cidrs = "${var.source_sg_cidrs}"   # tuple : list of {description, source_cidr, from, to, protocol, type}
   vpc_id  = "${module.vpc.vpc_id}"
@@ -91,7 +92,7 @@ module "eks-compute" {
   region = "${var.aws_region}"
   city   = "${var.city}"
   stage  = "${var.stage}"
-  name   = "${var.name}"
+  name   = var.cluster_name
   suffix = "${var.suffix}"
   kubernetes_version = "${var.kubernetes_version}"
   instance_type = "${var.instance_type}"
@@ -133,7 +134,7 @@ module "eks-domain" {
   region = "${var.aws_region}"
   city   = "${var.city}"
   stage  = "${var.stage}"
-  name   = "${var.name}"
+  name   = var.cluster_name
   suffix = "${var.suffix}"
   weighted_routing = "${var.weighted_routing}"
   vpc_id = "${module.vpc.vpc_id}"
@@ -154,7 +155,7 @@ module "efs" {
   region = "${var.aws_region}"
   city   = "${var.city}"
   stage  = "${var.stage}"
-  name   = "${var.name}"
+  name   = var.cluster_name
   suffix = "${var.suffix}"
   vpc_id = "${module.vpc.vpc_id}"
   subnet_ids = "${module.vpc.private_subnet_ids}"
