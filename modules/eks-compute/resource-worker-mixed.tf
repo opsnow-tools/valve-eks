@@ -43,6 +43,17 @@ resource "aws_autoscaling_group" "worker-mixed" {
 
   vpc_zone_identifier = var.subnet_ids
 
+  enabled_metrics = [ 
+    "GroupDesiredCapacity",
+    "GroupInServiceInstances",
+    "GroupMaxSize",
+    "GroupMinSize",
+    "GroupPendingInstances",
+    "GroupStandbyInstances",
+    "GroupTerminatingInstances",
+    "GroupTotalInstances",
+  ]
+  
   target_group_arns = [
     aws_lb_target_group.tg_http.arn,
   ]
