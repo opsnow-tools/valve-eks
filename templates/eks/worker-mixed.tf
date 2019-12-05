@@ -62,6 +62,17 @@ resource "aws_autoscaling_group" "worker-mixed" {
 
   vpc_zone_identifier = local.private_subnets
 
+  enabled_metrics = [ 
+    "GroupDesiredCapacity",
+    "GroupInServiceInstances",
+    "GroupMaxSize",
+    "GroupMinSize",
+    "GroupPendingInstances",
+    "GroupStandbyInstances",
+    "GroupTerminatingInstances",
+    "GroupTotalInstances",
+  ]
+
   mixed_instances_policy {
     instances_distribution {
       on_demand_base_capacity                  = local.on_demand_base
