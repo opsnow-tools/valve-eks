@@ -28,7 +28,8 @@ resource "aws_launch_template" "worker-mixed" {
     delete_on_termination       = true
     associate_public_ip_address = "${var.associate_public_ip_address}"
     security_groups             = [
-      aws_security_group.worker.id,
+      aws_security_group.worker-ingress.id,
+      aws_security_group.worker-egress.id,
     ]
   }
 }

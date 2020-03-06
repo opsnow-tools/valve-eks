@@ -9,10 +9,9 @@ allow_ips : Allow ips in Kubernetes worker node. Same with vpc_id.
 
 
 ## worker security group
-
-resource "aws_security_group" "worker" {
-  name        = "nodes.${local.cluster_name}"
-  description = "Security group for all worker nodes in the cluster"
+resource "aws_security_group" "worker-egress" {
+  name        = "nodes.${local.cluster_name}-egress"
+  description = "Worker security group for egress rules"
 
   vpc_id = local.vpc_id
 
@@ -23,6 +22,18 @@ resource "aws_security_group" "worker" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  tags = {
+    "Name"                                        = "nodes.${local.cluster_name}-egress"
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+  }
+}
+
+resource "aws_security_group" "worker-ingress" {
+  name        = "nodes.${local.cluster_name}-ingress"
+  description = "Worker security group for ingress rules"
+
+  vpc_id = local.vpc_id
+
   ingress {
     description = "Allow worker to communicate with each other"
     from_port   = 0
@@ -32,15 +43,15 @@ resource "aws_security_group" "worker" {
   }
 
   ingress {
-    description     = "Allow worker Kubernetes and pods to receive communication from the cluster control plane"
-    security_groups = [aws_security_group.cluster.id]
+    description     = "Allow worker to communicate with the cluster API Server"
+    security_groups = [aws_security_group.cluster-egress.id]
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
   }
 
   ingress {
-    description = "Allow worker to communicate with the cluster API Server"
+    description = "Allow worker to communicate with the bastion via SSH"
     cidr_blocks = local.allow_ips
     from_port   = 22
     to_port     = 22
@@ -48,7 +59,7 @@ resource "aws_security_group" "worker" {
   }
 
   ingress {
-    description     = "Allow worker Kubernetes and pods to receive communication from the ALB for the public nginx ingress"
+    description     = "Allow worker to communicate with the ALB for the public nginx ingress"
     security_groups = [aws_security_group.alb.id]
     from_port       = 0
     to_port         = 0
@@ -56,7 +67,7 @@ resource "aws_security_group" "worker" {
   }
 
   tags = {
-    "Name"                                        = "nodes.${local.cluster_name}"
+    "Name"                                        = "nodes.${local.cluster_name}-ingress"
     "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
 }

@@ -13,9 +13,9 @@ locals {
 }
 
 ## cluster security group
-resource "aws_security_group" "cluster" {
-  name        = "masters.${local.cluster_name}"
-  description = "Cluster communication with worker nodes"
+resource "aws_security_group" "cluster-egress" {
+  name        = "masters.${local.cluster_name}-egress"
+  description = "Cluster security group for egress rules"
 
   vpc_id = local.vpc_id
 
@@ -26,24 +26,36 @@ resource "aws_security_group" "cluster" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  tags = {
+    "Name"                                        = "masters.${local.cluster_name}-egress"
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+  }
+}
+
+resource "aws_security_group" "cluster-ingress" {
+  name        = "masters.${local.cluster_name}-ingress"
+  description = "Cluster security group for ingress rules"
+
+  vpc_id = local.vpc_id
+
   ingress {
     description     = "Allow node to communicate with the cluster API Server"
-    security_groups = [aws_security_group.worker.id]
+    security_groups = [aws_security_group.worker-egress.id]
     from_port       = 443
     to_port         = 443
     protocol        = "tcp"
   }
 
   ingress {
-    description = "Allow workstation to communicate with the cluster API server"
-    cidr_blocks = local.allow_ips
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
+    description     = "Allow workstation to communicate with the cluster API server"
+    cidr_blocks     = local.allow_ips
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
   }
 
   tags = {
-    "Name"                                        = "masters.${local.cluster_name}"
+    "Name"                                        = "masters.${local.cluster_name}-ingress"
     "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
 }
