@@ -4,7 +4,7 @@ resource "aws_launch_template" "worker-mixed" {
   count = "${length(var.mixed_instances) > 0 ? 1 : 0}"
 
   name_prefix   = "${local.upper_name}-MIXED-"
-  image_id             = "${data.aws_ami.worker.id}"
+  image_id      = "${data.aws_ami.worker.id}"
   instance_type = "${var.instance_type}"
   user_data     = "${base64encode(local.userdata)}"
 
@@ -27,8 +27,10 @@ resource "aws_launch_template" "worker-mixed" {
   network_interfaces {
     delete_on_termination       = true
     associate_public_ip_address = "${var.associate_public_ip_address}"
-    security_groups             = [
+    security_groups = [
       aws_security_group.worker.id,
+      aws_security_group.worker-internal.id,
+      var.worker_sg_id, #worker-ingress.id
     ]
   }
 }
@@ -43,7 +45,7 @@ resource "aws_autoscaling_group" "worker-mixed" {
 
   vpc_zone_identifier = var.subnet_ids
 
-  enabled_metrics = [ 
+  enabled_metrics = [
     "GroupDesiredCapacity",
     "GroupInServiceInstances",
     "GroupMaxSize",
@@ -53,7 +55,7 @@ resource "aws_autoscaling_group" "worker-mixed" {
     "GroupTerminatingInstances",
     "GroupTotalInstances",
   ]
-  
+
   target_group_arns = [
     aws_lb_target_group.tg_http.arn,
   ]
