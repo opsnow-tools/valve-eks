@@ -1,8 +1,9 @@
 # security group
 
-resource "aws_security_group" "this" {
-  name        = "${var.sg_name}.${local.lower_name}"
-  description = "${var.sg_desc}"
+# For ALB
+resource "aws_security_group" "service" {
+  name        = "service.${local.lower_name}"
+  description = "Security group for a load balancer"
 
   vpc_id = var.vpc_id
 
@@ -11,6 +12,42 @@ resource "aws_security_group" "this" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "http"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "https"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name      = "service.${local.lower_name}"
+    SG_Groups = "${local.lower_name}"
+  }
+}
+
+resource "aws_security_group" "node-ingress" {
+  name        = "${var.sg_name}.${local.lower_name}"
+  description = "Set rules for controlling access from outside to the worker nodes"
+
+  vpc_id = var.vpc_id
+
+  ingress {
+    description     = "Allow communication with the load balancer"
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = [aws_security_group.service.id]
   }
 
   dynamic "ingress" {
@@ -38,7 +75,6 @@ resource "aws_security_group" "this" {
   tags = {
     Name      = "${var.sg_name}.${local.lower_name}"
     SG_Groups = "${local.lower_name}"
-
   }
 
 }

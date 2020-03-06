@@ -6,8 +6,8 @@ resource "aws_lb" "main" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [
-                        aws_security_group.alb.id, 
-                        var.worker_sg_id != "" ? var.worker_sg_id : data.aws_security_group.worker_sg_id.id,
+                        data.aws_security_group.service_sg.id, 
+                        var.worker_sg_id != "" ? var.worker_sg_id : data.aws_security_group.worker_sg.id,
                       ]
   subnets            = var.public_subnet_ids
 
@@ -19,36 +19,6 @@ resource "aws_lb" "main" {
   tags = {
       "Name" = "${local.upper_name}-ALB"
   }    
-}
-
-resource "aws_security_group" "alb" {
-  vpc_id = var.vpc_id
-  name   = "${local.upper_name}-ALB"
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-      "Name" = "${local.upper_name}-ALB"
-  }
 }
 
 resource "aws_lb_listener" "frontend_http" {
