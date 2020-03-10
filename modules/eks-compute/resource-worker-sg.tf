@@ -1,8 +1,20 @@
 # worker security group
 
-resource "aws_security_group" "worker-egress" {
-  name        = "nodes.${local.lower_name}-egress"
+resource "aws_security_group" "worker" {
+  name        = "node.${local.lower_name}"
   description = "Security group for all worker nodes in the cluster"
+
+  vpc_id = var.vpc_id
+
+  tags = {
+    "Name"                                      = "node.${local.lower_name}"
+    "kubernetes.io/cluster/${local.lower_name}" = "owned"
+  }
+}
+
+resource "aws_security_group" "worker-internal" {
+  name        = "nodes-internal.${local.lower_name}"
+  description = "Worker security group for ingress rules"
 
   vpc_id = var.vpc_id
 
@@ -12,18 +24,6 @@ resource "aws_security_group" "worker-egress" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    "Name"                                      = "nodes.${local.lower_name}"
-    "kubernetes.io/cluster/${local.lower_name}" = "owned"
-  }
-}
-
-resource "aws_security_group" "worker-ingress" {
-  name        = "nodes.${local.lower_name}-ingress"
-  description = "Worker security group for ingress rules"
-
-  vpc_id = var.vpc_id
 
   ingress {
     description = "Allow worker to communicate with each other"
@@ -35,14 +35,14 @@ resource "aws_security_group" "worker-ingress" {
 
   ingress {
     description     = "Allow worker to communicate with the cluster API Server"
-    security_groups = [aws_security_group.cluster-egress.id]
+    security_groups = [aws_security_group.cluster.id]
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
   }
 
   tags = {
-    "Name"                                      = "nodes.${local.lower_name}-ingress"
+    "Name"                                      = "nodes-internal.${local.lower_name}"
     "kubernetes.io/cluster/${local.lower_name}" = "owned"
   }
 }

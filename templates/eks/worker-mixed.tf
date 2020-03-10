@@ -50,7 +50,10 @@ resource "aws_launch_template" "worker-mixed" {
   network_interfaces {
     delete_on_termination       = true
     associate_public_ip_address = false
-    security_groups             = [aws_security_group.worker-egress.id, aws_security_group.worker-igress.id]
+    security_groups             = [
+      aws_security_group.worker.id, 
+      aws_security_group.worker-internal.id,
+    ]
   }
 }
 

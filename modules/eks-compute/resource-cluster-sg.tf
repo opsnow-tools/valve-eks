@@ -1,7 +1,7 @@
 ## cluster security group
 
-resource "aws_security_group" "cluster-egress" {
-  name        = "masters.${local.lower_name}-egress"
+resource "aws_security_group" "cluster" {
+  name        = "master.${local.lower_name}"
   description = "Cluster security group for egress rules"
 
   vpc_id = var.vpc_id
@@ -13,28 +13,16 @@ resource "aws_security_group" "cluster-egress" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    "Name"                                      = "masters.${local.lower_name}-egress"
-    "kubernetes.io/cluster/${local.lower_name}" = "owned"
-  }
-}
-
-resource "aws_security_group" "cluster-ingress" {
-  name        = "masters.${local.lower_name}-ingress"
-  description = "Cluster security group for ingress rules"
-
-  vpc_id = var.vpc_id
-
   ingress {
     description     = "Allow node to communicate with the cluster API Server"
-    security_groups = [aws_security_group.worker-egress.id]
+    security_groups = [aws_security_group.worker.id]
     from_port       = 443
     to_port         = 443
     protocol        = "tcp"
   }
 
   tags = {
-    "Name"                                      = "masters.${local.lower_name}-ingress"
+    "Name"                                      = "masters.${local.lower_name}"
     "kubernetes.io/cluster/${local.lower_name}" = "owned"
   }
 }

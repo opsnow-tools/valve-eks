@@ -9,9 +9,21 @@ allow_ips : Allow ips in Kubernetes worker node. Same with vpc_id.
 
 
 ## worker security group
-resource "aws_security_group" "worker-egress" {
-  name        = "nodes.${local.cluster_name}-egress"
-  description = "Worker security group for egress rules"
+resource "aws_security_group" "worker" {
+  name        = "node.${local.cluster_name}"
+  description = "Security group for worker nodes"
+
+  vpc_id = local.vpc_id
+
+  tags = {
+    "Name"                                        = "nodes.${local.cluster_name}"
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+  }
+}
+
+resource "aws_security_group" "worker-internal" {
+  name        = "node-internal.${local.cluster_name}"
+  description = "Security group for worker node's internal rules"
 
   vpc_id = local.vpc_id
 
@@ -21,18 +33,6 @@ resource "aws_security_group" "worker-egress" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    "Name"                                        = "nodes.${local.cluster_name}-egress"
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-  }
-}
-
-resource "aws_security_group" "worker-ingress" {
-  name        = "nodes.${local.cluster_name}-ingress"
-  description = "Worker security group for ingress rules"
-
-  vpc_id = local.vpc_id
 
   ingress {
     description = "Allow worker to communicate with each other"
@@ -44,30 +44,14 @@ resource "aws_security_group" "worker-ingress" {
 
   ingress {
     description     = "Allow worker to communicate with the cluster API Server"
-    security_groups = [aws_security_group.cluster-egress.id]
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-  }
-
-  ingress {
-    description = "Allow worker to communicate with the bastion via SSH"
-    cidr_blocks = local.allow_ips
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-  }
-
-  ingress {
-    description     = "Allow worker to communicate with the ALB for the public nginx ingress"
-    security_groups = [aws_security_group.alb.id]
+    security_groups = [aws_security_group.cluster.id]
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
   }
 
   tags = {
-    "Name"                                        = "nodes.${local.cluster_name}-ingress"
+    "Name"                                        = "node-internal.${local.cluster_name}"
     "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
 }
