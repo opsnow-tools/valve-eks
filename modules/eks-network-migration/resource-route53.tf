@@ -9,7 +9,7 @@ resource "aws_route53_record" "address_bset" {
     weight = var.weighted_routing_new
   }
 
-  set_identifier = "subSet"
+  set_identifier = var.name
 
   alias {
       name = "${aws_lb.main.dns_name}"
@@ -17,8 +17,6 @@ resource "aws_route53_record" "address_bset" {
       evaluate_target_health = true
   }
 }
-
-
 
 resource "aws_route53_record" "address_represent" {
   zone_id = "${data.aws_route53_zone.selected.zone_id}"
@@ -29,7 +27,7 @@ resource "aws_route53_record" "address_represent" {
     weight = var.weighted_routing_represent
   }
 
-  set_identifier = "NewSet"
+  set_identifier = var.name
 
   alias {
       name = "${aws_lb.main.dns_name}"
