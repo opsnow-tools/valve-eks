@@ -15,7 +15,7 @@ locals {
 ## cluster security group
 resource "aws_security_group" "cluster" {
   name        = "masters.${local.cluster_name}"
-  description = "Security group for cluster"
+  description = "Cluster communication with worker nodes"
 
   vpc_id = local.vpc_id
 
@@ -35,11 +35,11 @@ resource "aws_security_group" "cluster" {
   }
 
   ingress {
-    description     = "Allow workstation to communicate with the cluster API server"
-    cidr_blocks     = local.allow_ips
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
+    description         = "Allow workstation to communicate with the cluster API server"
+    cidr_blocks         = local.allow_ips
+    from_port           = 443
+    to_port             = 443
+    protocol            = "tcp"
   }
 
   tags = {

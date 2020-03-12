@@ -30,7 +30,7 @@ resource "aws_launch_configuration" "worker" {
 
   associate_public_ip_address = false
 
-  security_groups = [aws_security_group.worker-ingress.id, aws_security_group.worker-egress.id]
+  security_groups = [aws_security_group.worker.id]
 
   root_block_device {
     volume_type           = "gp2"

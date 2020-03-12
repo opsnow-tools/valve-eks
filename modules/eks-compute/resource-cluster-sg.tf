@@ -2,7 +2,7 @@
 
 resource "aws_security_group" "cluster" {
   name        = "master.${local.lower_name}"
-  description = "Cluster security group for egress rules"
+  description = "Cluster communication with worker nodes"
 
   vpc_id = var.vpc_id
 
@@ -27,22 +27,3 @@ resource "aws_security_group" "cluster" {
   }
 }
 
-# resource "aws_security_group_rule" "cluster-ingress-node-https" {
-#   description              = "Allow node to communicate with the cluster API Server"
-#   security_group_id        = aws_security_group.cluster.id
-#   source_security_group_id = aws_security_group.worker.id
-#   from_port                = 443
-#   to_port                  = 443
-#   protocol                 = "tcp"
-#   type                     = "ingress"
-# }
-
-# resource "aws_security_group_rule" "cluster-ingress-admin-https" {
-#   description       = "Allow workstation to communicate with the cluster API Server"
-#   security_group_id = aws_security_group.cluster.id
-#   cidr_blocks       = local.allow_ips
-#   from_port         = 443
-#   to_port           = 443
-#   protocol          = "tcp"
-#   type              = "ingress"
-# }

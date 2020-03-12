@@ -9,21 +9,10 @@ allow_ips : Allow ips in Kubernetes worker node. Same with vpc_id.
 
 
 ## worker security group
+
 resource "aws_security_group" "worker" {
-  name        = "node.${local.cluster_name}"
-  description = "Security group for worker nodes"
-
-  vpc_id = local.vpc_id
-
-  tags = {
-    "Name"                                        = "nodes.${local.cluster_name}"
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-  }
-}
-
-resource "aws_security_group" "worker-internal" {
-  name        = "node-internal.${local.cluster_name}"
-  description = "Security group for worker node's internal rules"
+  name        = "nodes.${local.cluster_name}"
+  description = "Security group for all worker nodes in the cluster"
 
   vpc_id = local.vpc_id
 
@@ -43,15 +32,31 @@ resource "aws_security_group" "worker-internal" {
   }
 
   ingress {
-    description     = "Allow worker to communicate with the cluster API Server"
+    description     = "Allow worker Kubernetes and pods to receive communication from the cluster control plane"
     security_groups = [aws_security_group.cluster.id]
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
   }
 
+  ingress {
+    description = "Allow worker to communicate with the cluster API Server"
+    cidr_blocks = local.allow_ips
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+  }
+
+  ingress {
+    description     = "Allow worker Kubernetes and pods to receive communication from the ALB for the public nginx ingress"
+    security_groups = [aws_security_group.alb.id]
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+  }
+
   tags = {
-    "Name"                                        = "node-internal.${local.cluster_name}"
+    "Name"                                        = "nodes.${local.cluster_name}"
     "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
 }

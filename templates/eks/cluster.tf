@@ -22,7 +22,7 @@ resource "aws_eks_cluster" "cluster" {
 
   vpc_config {
     subnet_ids         = local.private_subnets
-    security_group_ids = [aws_security_group.cluster-ingress.id, aws_security_group.cluster-egress.id]
+    security_group_ids = [aws_security_group.cluster.id]
   }
 
   depends_on = [

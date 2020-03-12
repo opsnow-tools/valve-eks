@@ -28,23 +28,12 @@ resource "aws_launch_template" "worker-mixed" {
     delete_on_termination       = true
     associate_public_ip_address = "${var.associate_public_ip_address}"
     security_groups = [
-      var.worker_sg_id,
       aws_security_group.worker.id,
       aws_security_group.worker-internal.id,
+      var.worker_sg_id, #worker-ingress.id
     ]
   }
 }
-
-# resource "aws_security_group_rule" "worker-ingress-sg" {
-#   description              = "Allow workstation to communicate with the cluster API Server"
-#   security_group_id        = aws_security_group.worker.id
-#   # source_security_group_id = var.worker_sg_id != "" ? var.worker_sg_id : data.aws_security_group.worker_sg_id.id
-#   source_security_group_id = var.worker_sg_id
-#   from_port                = 0
-#   to_port                  = 65535
-#   protocol                 = "-1"
-#   type                     = "ingress"
-# }
 
 resource "aws_autoscaling_group" "worker-mixed" {
   count = "${length(var.mixed_instances) > 0 ? 1 : 0}"
