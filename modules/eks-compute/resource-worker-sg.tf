@@ -13,7 +13,7 @@ resource "aws_security_group" "worker" {
 }
 
 resource "aws_security_group" "worker-internal" {
-  name        = "nodes-internal.${local.lower_name}"
+  name        = "node-internal.${local.lower_name}"
   description = "Worker security group for ingress rules"
 
   vpc_id = var.vpc_id
@@ -42,7 +42,7 @@ resource "aws_security_group" "worker-internal" {
   }
 
   tags = {
-    "Name"                                      = "nodes-internal.${local.lower_name}"
+    "Name"                                      = "node-internal.${local.lower_name}"
     "kubernetes.io/cluster/${local.lower_name}" = "owned"
   }
 }
