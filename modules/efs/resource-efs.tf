@@ -1,7 +1,7 @@
 # efs
 
 resource "aws_efs_file_system" "efs" {
-  creation_token = "${local.lower_name}"
+  creation_token = local.lower_name
 
   tags = {
     "Name"                                      = "efs.${local.lower_name}"
@@ -14,7 +14,7 @@ resource "aws_efs_mount_target" "efs" {
 
   file_system_id = aws_efs_file_system.efs.id
 
-  subnet_id = "${var.subnet_ids[count.index]}"
+  subnet_id = var.subnet_ids[count.index]
 
-  security_groups = ["${aws_security_group.efs.id}"]
+  security_groups = [aws_security_group.efs.id]
 }

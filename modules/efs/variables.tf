@@ -27,12 +27,12 @@ variable "vpc_id" {
 
 variable "subnet_ids" {
   description = "List of Subnet Ids"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "mount_target_sg" {
   description = "Security Group ID for mount target"
-  type        = "list"
+  type        = list(string)
   default     = []
 }

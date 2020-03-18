@@ -31,13 +31,13 @@ variable "vpc_id" {
 
 variable "public_subnet_ids" {
   description = "List of Public Subnet Ids"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "worker_sg_id" {
   description = "EKS worker security group. e.g. sg-xxxxxx"
-  type        = "string"
+  type        = string
   default     = ""
 }
 
