@@ -6,10 +6,10 @@ resource "aws_eks_cluster" "cluster" {
   version  = var.kubernetes_version
 
   vpc_config {
-    subnet_ids         = var.subnet_ids
+    subnet_ids = var.subnet_ids
     security_group_ids = [
-        aws_security_group.cluster.id,
-      ]
+      aws_security_group.cluster.id,
+    ]
   }
 
   depends_on = [
