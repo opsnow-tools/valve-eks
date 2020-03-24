@@ -6,8 +6,7 @@ resource "aws_lb" "main" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [
-                        data.aws_security_group.service_sg.id, 
-                        var.worker_sg_id != "" ? var.worker_sg_id : data.aws_security_group.worker_sg.id,
+                        data.aws_security_group.service_sg.id
                       ]
   subnets            = var.public_subnet_ids
 
